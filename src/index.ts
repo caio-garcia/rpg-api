@@ -3,7 +3,9 @@ require("dotenv").config({ path: "src" + "/.env" });
 const express = require("express");
 const app = express();
 
-app.get("/", (req: any, res: any): any => {
+app.use(express.json());
+
+app.get("/nene", (req: any, res: any): any => {
   res.send("Nene!");
 });
 
