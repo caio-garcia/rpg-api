@@ -1,12 +1,15 @@
+import { configDotenv } from 'dotenv'
 import express from 'express'
+
+configDotenv()
+
 const app = express()
-const port = 3000
 
 app.get('/', (req, res) => {
   res.send('Hello World! ')
 })
 
-app.listen(port, () => {
-  console.log(`Express is listening at http://localhost:${port}`)
+app.listen(Number(process.env.PORT), () => {
+  console.log(`RPG API is listening at http://localhost:${process.env.PORT}`)
 }
 )
