@@ -22,11 +22,15 @@ async function createDataDB (
 }
 
 async function getAllUserDB (): Promise<iUser[]> {
-  const client = await pool.connect()
-
-  const sql: string = 'SELECT * FROM users order by id asc'
-  const { rows } = await client.query(sql)
-  return rows
+  try {
+    const client = await pool.connect()
+    const sql: string = 'SELECT * FROM users order by id asc'
+    const { rows } = await client.query(sql)
+    return rows
+  } catch (error: any) {
+    console.log('ERROR ======>', error)
+    return []
+  }
 }
 
 async function getAllUserByIdDB (id: string): Promise<iUser[]> {

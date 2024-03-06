@@ -6,7 +6,7 @@ import {
   updateUserDB,
   deleteUserDB,
   partUpdateUserDB
-} from '../query/user.query'
+} from '../queries/user.query'
 
 async function createData (
   name: string,

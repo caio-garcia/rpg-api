@@ -5,6 +5,8 @@
       "moduleResolution": "NodeNext",
       "outDir": "dist",
       "esModuleInterop": true,
+          "types": ["node"],
+      "typeRoots": ["./types", "@types", "node_modules/@types"],
       "strict": true,
       "skipLibCheck": true,
       "strictNullChecks": true
