@@ -14,11 +14,11 @@ datasource db {
 }
 
 model vampire_dark_ages_roads {
-  vampire_dark_ages_road_id String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  characther_sheet          character_sheets @relation(fields: [character_sheet_id], references: [character_sheet_id])
-  character_sheet_id        String           @db.Uuid
+  vampire_dark_ages_road_id String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  vampire_dark_ages_main    vampire_dark_ages_main @relation(fields: [vampire_dark_ages_main_id], references: [vampire_dark_ages_main_id])
+  vampire_dark_ages_main_id String                 @db.Uuid
   name                      String
-  level                     Int              @default(0)
+  level                     Int                    @default(0)
 }
 
 model vampire_dark_ages_advantages_virtues {
@@ -34,8 +34,8 @@ model vampire_dark_ages_advantages_virtues {
 
 model vampire_dark_ages_advantages {
   vampire_dark_ages_advantages_id      String                                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  characther_sheet                     character_sheets                       @relation(fields: [character_sheet_id], references: [character_sheet_id])
-  character_sheet_id                   String                                 @db.Uuid
+  vampire_dark_ages_main               vampire_dark_ages_main                 @relation(fields: [vampire_dark_ages_main_id], references: [vampire_dark_ages_main_id])
+  vampire_dark_ages_main_id            String                                 @db.Uuid
   disciplines                          Json
   backgrounds                          Json
   vampire_dark_ages_advantages_virtues vampire_dark_ages_advantages_virtues[]
@@ -94,8 +94,8 @@ model vampire_dark_ages_abilities_talents {
 
 model vampire_dark_ages_abilities {
   vampire_dark_ages_abilities_id         String                                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  characther_sheet                       character_sheets                         @relation(fields: [character_sheet_id], references: [character_sheet_id])
-  character_sheet_id                     String                                   @db.Uuid
+  vampire_dark_ages_main                 vampire_dark_ages_main                   @relation(fields: [vampire_dark_ages_main_id], references: [vampire_dark_ages_main_id])
+  vampire_dark_ages_main_id              String                                   @db.Uuid
   vampire_dark_ages_abilities_talents    vampire_dark_ages_abilities_talents[]
   vampire_dark_ages_abilities_skills     vampire_dark_ages_abilities_skills[]
   vampire_dark_ages_abilities_knowledges vampire_dark_ages_abilities_knowledges[]
@@ -130,38 +130,40 @@ model vampire_dark_ages_attributes_physical {
 
 model vampire_dark_ages_attributes {
   vampire_dark_ages_attributes_id       String                                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  characther_sheet                      character_sheets                        @relation(fields: [character_sheet_id], references: [character_sheet_id])
-  character_sheet_id                    String                                  @db.Uuid
+  vampire_dark_ages_main                vampire_dark_ages_main                  @relation(fields: [vampire_dark_ages_main_id], references: [vampire_dark_ages_main_id])
+  vampire_dark_ages_main_id             String                                  @db.Uuid
   vampire_dark_ages_attributes_physical vampire_dark_ages_attributes_physical[]
   vampire_dark_ages_attributes_social   vampire_dark_ages_attributes_social[]
   vampire_dark_ages_attributes_mental   vampire_dark_ages_attributes_mental[]
 }
 
 model vampire_dark_ages_main {
-  vampire_dark_ages_main_id String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  character_name            String
-  chronicle                 String?
-  nature                    String
-  demeanor                  String
-  clan                      String
-  generation                Int
-  concept                   String
-  haven                     String
-  blood_pool                Int              @default(0)
-  experience                Int              @default(0)
-  characther_sheet          character_sheets @relation(fields: [character_sheet_id], references: [character_sheet_id])
-  character_sheet_id        String           @db.Uuid
-}
-
-model character_sheets {
-  character_sheet_id           String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  player                       users                          @relation(fields: [player_id], references: [user_id])
-  player_id                    String                         @db.Uuid
-  vampire_dark_ages_main       vampire_dark_ages_main[]
+  vampire_dark_ages_main_id    String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  character_name               String
+  chronicle                    String?
+  nature                       String
+  demeanor                     String
+  clan                         String
+  generation                   Int
+  concept                      String
+  haven                        String
+  will_power                   Int                            @default(0)
+  vitality                     Int                            @default(0)
+  blood_pool                   Int                            @default(0)
+  experience                   Int                            @default(0)
+  characther_sheet             character_sheets               @relation(fields: [fk_character_sheet_id], references: [character_sheet_id])
+  fk_character_sheet_id        String                         @db.Uuid
   vampire_dark_ages_attributes vampire_dark_ages_attributes[]
   vampire_dark_ages_abilities  vampire_dark_ages_abilities[]
   vampire_dark_ages_advantages vampire_dark_ages_advantages[]
   vampire_dark_ages_roads      vampire_dark_ages_roads[]
+}
+
+model character_sheets {
+  character_sheet_id     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  player                 users                    @relation(fields: [fk_player_id], references: [user_id])
+  fk_player_id              String                   @db.Uuid
+  vampire_dark_ages_main vampire_dark_ages_main[]
 }
 
 model users {
