@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model vampire_dark_ages_attributes_mental {
+  vampire_dark_ages_attributes_physical_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  intelligence                             Int                          @default(1)
+  witts                                    Int                          @default(1)
+  resolve                                  Int                          @default(1)
+  vampire_dark_ages_attributes             vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
+  fk_vampire_dark_ages_attributes_id          String                       @db.Uuid
+}
+
+model vampire_dark_ages_attributes_social {
+  vampire_dark_ages_attributes_physical_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  charisma                                 Int                          @default(1)
+  manipulation                             Int                          @default(1)
+  compusure                                Int                          @default(1)
+  vampire_dark_ages_attributes             vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
+  fk_vampire_dark_ages_attributes_id          String                       @db.Uuid
+}
+
+model vampire_dark_ages_attributes_physical {
+  vampire_dark_ages_attributes_physical_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  strength                                 Int                          @default(1)
+  dexterit                                 Int                          @default(1)
+  stamina                                  Int                          @default(1)
+  vampire_dark_ages_attributes             vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
+  fk_vampire_dark_ages_attributes_id          String                       @db.Uuid
+}
+
+model vampire_dark_ages_attributes {
+  vampire_dark_ages_attributes_id       String                                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characther_sheet                      character_sheets                        @relation(fields: [character_sheet_id], references: [character_sheet_id])
+  character_sheet_id                    String                                  @db.Uuid
+  vampire_dark_ages_attributes_physical vampire_dark_ages_attributes_physical[]
+  vampire_dark_ages_attributes_social   vampire_dark_ages_attributes_social[]
+  vampire_dark_ages_attributes_mental   vampire_dark_ages_attributes_mental[]
+}
+
+model vampire_dark_ages_main {
+  vampire_dark_ages_main_id String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  character_name            String
+  chronicle                 String?
+  nature                    String
+  demeanor                  String
+  clan                      String
+  generation                Int
+  concept                   String
+  haven                     String
+  characther_sheet          character_sheets @relation(fields: [character_sheet_id], references: [character_sheet_id])
+  character_sheet_id        String           @db.Uuid
+}
+
+model character_sheets {
+  character_sheet_id           String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  player                       users                          @relation(fields: [player_id], references: [user_id])
+  player_id                    String                         @db.Uuid
+  vampire_dark_ages_main       vampire_dark_ages_main[]
+  vampire_dark_ages_attributes vampire_dark_ages_attributes[]
+}
+
+model users {
+  user_id          String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String
+  surname          String
+  password         String
+  email            String
+  character_sheets character_sheets[]
+}
