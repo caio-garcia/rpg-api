@@ -14,12 +14,13 @@ datasource db {
 }
 
 model vampire_dark_ages_roads {
-  vampire_dark_ages_road_id      String                                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  characther_sheet                     character_sheets                       @relation(fields: [character_sheet_id], references: [character_sheet_id])
-  character_sheet_id                   String                                 @db.Uuid
-  name String
-  level Int @default(0)
+  vampire_dark_ages_road_id String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characther_sheet          character_sheets @relation(fields: [character_sheet_id], references: [character_sheet_id])
+  character_sheet_id        String           @db.Uuid
+  name                      String
+  level                     Int              @default(0)
 }
+
 model vampire_dark_ages_advantages_virtues {
   vampire_dark_ages_advantages_knowledges_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   conscience_conviction                      Int
@@ -146,8 +147,8 @@ model vampire_dark_ages_main {
   generation                Int
   concept                   String
   haven                     String
-  blood_pool Int @default(0)
-  experience Int @default(0)
+  blood_pool                Int              @default(0)
+  experience                Int              @default(0)
   characther_sheet          character_sheets @relation(fields: [character_sheet_id], references: [character_sheet_id])
   character_sheet_id        String           @db.Uuid
 }
@@ -160,7 +161,7 @@ model character_sheets {
   vampire_dark_ages_attributes vampire_dark_ages_attributes[]
   vampire_dark_ages_abilities  vampire_dark_ages_abilities[]
   vampire_dark_ages_advantages vampire_dark_ages_advantages[]
-  vampire_dark_ages_roads vampire_dark_ages_roads[]
+  vampire_dark_ages_roads      vampire_dark_ages_roads[]
 }
 
 model users {
