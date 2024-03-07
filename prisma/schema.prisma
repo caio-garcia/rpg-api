@@ -13,22 +13,82 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model vampire_dark_ages_abilities_knowledges {
+  vampire_dark_ages_abilities_knowledges_id String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  academics                                 Int                         @default(0)
+  hearth_wisdom                             Int                         @default(0)
+  investigation                             Int                         @default(0)
+  law                                       Int                         @default(0)
+  linguistics                               Int                         @default(0)
+  medicine                                  Int                         @default(0)
+  occult                                    Int                         @default(0)
+  politics                                  Int                         @default(0)
+  science                                   Int                         @default(0)
+  seneschal                                 Int                         @default(0)
+  extended_knowledges                       Json?
+  vampire_dark_ages_abilities               vampire_dark_ages_abilities @relation(fields: [fk_vampire_dark_ages_abilities_id], references: [vampire_dark_ages_abilities_id])
+  fk_vampire_dark_ages_abilities_id         String                      @db.Uuid
+}
+
+model vampire_dark_ages_abilities_skills {
+  vampire_dark_ages_abilities_skills_id String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  animal_ken                            Int                         @default(0)
+  archery                               Int                         @default(0)
+  crafts                                Int                         @default(0)
+  etiquette                             Int                         @default(0)
+  herbalism                             Int                         @default(0)
+  melee                                 Int                         @default(0)
+  music                                 Int                         @default(0)
+  ride                                  Int                         @default(0)
+  stealth                               Int                         @default(0)
+  survival                              Int                         @default(0)
+  extended_skills                       Json?
+  vampire_dark_ages_abilities           vampire_dark_ages_abilities @relation(fields: [fk_vampire_dark_ages_abilities_id], references: [vampire_dark_ages_abilities_id])
+  fk_vampire_dark_ages_abilities_id     String                      @db.Uuid
+}
+
+model vampire_dark_ages_abilities_talents {
+  vampire_dark_ages_abilities_talents_id String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  acting                                 Int                         @default(0)
+  alertness                              Int                         @default(0)
+  atletics                               Int                         @default(0)
+  brawl                                  Int                         @default(0)
+  dodge                                  Int                         @default(0)
+  empathy                                Int                         @default(0)
+  intimidation                           Int                         @default(0)
+  larceny                                Int                         @default(0)
+  leadership                             Int                         @default(0)
+  subterfuge                             Int                         @default(0)
+  extended_talents                       Json?
+  vampire_dark_ages_abilities            vampire_dark_ages_abilities @relation(fields: [fk_vampire_dark_ages_abilities_id], references: [vampire_dark_ages_abilities_id])
+  fk_vampire_dark_ages_abilities_id      String                      @db.Uuid
+}
+
+model vampire_dark_ages_abilities {
+  vampire_dark_ages_abilities_id         String                                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characther_sheet                       character_sheets                         @relation(fields: [character_sheet_id], references: [character_sheet_id])
+  character_sheet_id                     String                                   @db.Uuid
+  vampire_dark_ages_abilities_talents    vampire_dark_ages_abilities_talents[]
+  vampire_dark_ages_abilities_skills     vampire_dark_ages_abilities_skills[]
+  vampire_dark_ages_abilities_knowledges vampire_dark_ages_abilities_knowledges[]
+}
+
 model vampire_dark_ages_attributes_mental {
-  vampire_dark_ages_attributes_physical_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  intelligence                             Int                          @default(1)
-  witts                                    Int                          @default(1)
-  resolve                                  Int                          @default(1)
-  vampire_dark_ages_attributes             vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
-  fk_vampire_dark_ages_attributes_id          String                       @db.Uuid
+  vampire_dark_ages_attributes_mental_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  intelligence                           Int                          @default(1)
+  witts                                  Int                          @default(1)
+  resolve                                Int                          @default(1)
+  vampire_dark_ages_attributes           vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
+  fk_vampire_dark_ages_attributes_id     String                       @db.Uuid
 }
 
 model vampire_dark_ages_attributes_social {
-  vampire_dark_ages_attributes_physical_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  charisma                                 Int                          @default(1)
-  manipulation                             Int                          @default(1)
-  compusure                                Int                          @default(1)
-  vampire_dark_ages_attributes             vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
-  fk_vampire_dark_ages_attributes_id          String                       @db.Uuid
+  vampire_dark_ages_attributes_social_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  charisma                               Int                          @default(1)
+  manipulation                           Int                          @default(1)
+  compusure                              Int                          @default(1)
+  vampire_dark_ages_attributes           vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
+  fk_vampire_dark_ages_attributes_id     String                       @db.Uuid
 }
 
 model vampire_dark_ages_attributes_physical {
@@ -37,7 +97,7 @@ model vampire_dark_ages_attributes_physical {
   dexterit                                 Int                          @default(1)
   stamina                                  Int                          @default(1)
   vampire_dark_ages_attributes             vampire_dark_ages_attributes @relation(fields: [fk_vampire_dark_ages_attributes_id], references: [vampire_dark_ages_attributes_id])
-  fk_vampire_dark_ages_attributes_id          String                       @db.Uuid
+  fk_vampire_dark_ages_attributes_id       String                       @db.Uuid
 }
 
 model vampire_dark_ages_attributes {
@@ -69,6 +129,7 @@ model character_sheets {
   player_id                    String                         @db.Uuid
   vampire_dark_ages_main       vampire_dark_ages_main[]
   vampire_dark_ages_attributes vampire_dark_ages_attributes[]
+  vampire_dark_ages_abilities  vampire_dark_ages_abilities[]
 }
 
 model users {
