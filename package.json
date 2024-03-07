@@ -8,7 +8,8 @@
     "build": "npx tsc",
     "start": "npx tsc && node dist/app.js",
     "lint:check": "npx eslint . --ext .ts --quiet",
-    "lint:fix": "npx eslint . --ext .ts --fix"
+    "lint:fix": "npx eslint . --ext .ts --fix",
+    "prisma:migrate": "npx prisma migrate dev --name init"
   },
   "repository": {
     "type": "git",
