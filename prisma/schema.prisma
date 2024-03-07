@@ -13,6 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model vampire_dark_ages_advantages_virtues {
+  vampire_dark_ages_advantages_knowledges_id String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  conscience_conviction                      Int
+  self_control_instinct                      Int
+  courage                                    Int
+  conscience                                 Boolean
+  sel_control                                Boolean
+  vampire_dark_ages_advantages               vampire_dark_ages_advantages @relation(fields: [fk_vampire_dark_ages_advantages_id], references: [vampire_dark_ages_advantages_id])
+  fk_vampire_dark_ages_advantages_id         String                       @db.Uuid
+}
+
+model vampire_dark_ages_advantages {
+  vampire_dark_ages_advantages_id      String                                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characther_sheet                     character_sheets                       @relation(fields: [character_sheet_id], references: [character_sheet_id])
+  character_sheet_id                   String                                 @db.Uuid
+  disciplines                          Json
+  backgrounds                          Json
+  vampire_dark_ages_advantages_virtues vampire_dark_ages_advantages_virtues[]
+}
+
 model vampire_dark_ages_abilities_knowledges {
   vampire_dark_ages_abilities_knowledges_id String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   academics                                 Int                         @default(0)
@@ -130,6 +150,7 @@ model character_sheets {
   vampire_dark_ages_main       vampire_dark_ages_main[]
   vampire_dark_ages_attributes vampire_dark_ages_attributes[]
   vampire_dark_ages_abilities  vampire_dark_ages_abilities[]
+  vampire_dark_ages_advantages vampire_dark_ages_advantages[]
 }
 
 model users {
