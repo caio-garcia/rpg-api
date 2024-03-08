@@ -1,18 +1,24 @@
-import { configDotenv } from "dotenv";
-import express from "express";
-import userRoute from "./controllers/user.controller";
+import { configDotenv } from 'dotenv'
+import express from 'express'
+import bodyParser from 'body-parser'
+import userRoute from './controllers/user.controller'
 
-configDotenv();
+configDotenv()
 
-const app = express();
+const app = express()
 
-app.get("/", (req, res) => {
-  console.log(req.body);
-  res.send("Welcome to RPG API");
-});
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use("/user", userRoute);
+// parse application/json
+app.use(bodyParser.json())
+
+app.get('/', (req, res) => {
+  res.send('Welcome to RPG API')
+})
+
+app.use('/user', userRoute)
 
 app.listen(Number(process.env.PORT), () => {
-  console.log(`RPG API is listening at http://localhost:${process.env.PORT}`);
-});
+  console.log(`RPG API is listening at http://localhost:${process.env.PORT}`)
+})
