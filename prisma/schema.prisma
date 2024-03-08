@@ -162,7 +162,7 @@ model vampire_dark_ages_main {
 model character_sheets {
   character_sheet_id     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   player                 users                    @relation(fields: [fk_player_id], references: [user_id])
-  fk_player_id              String                   @db.Uuid
+  fk_player_id           String                   @db.Uuid
   vampire_dark_ages_main vampire_dark_ages_main[]
 }
 

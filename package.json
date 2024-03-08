@@ -9,7 +9,8 @@
     "start": "npx tsc && node dist/app.js",
     "lint:check": "npx eslint . --ext .ts --quiet",
     "lint:fix": "npx eslint . --ext .ts --fix",
-    "prisma:migrate": "npx prisma migrate dev --name init"
+    "prisma:migrate": "npx prisma migrate dev --name init",
+    "db:check": "psql -h 'localhost' -p 5432 -W -U 'postgres' 'rpg' -c 'SELECT * FROM vampire_dark_ages_abilities_knowledges;'"
   },
   "repository": {
     "type": "git",

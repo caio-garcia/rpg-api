@@ -1,9 +1,9 @@
 interface iUser {
-  readonly id?: number
-  name?: string
-  surname?: string
-  email?: string
-  pwd?: string
+  user_id: string;
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
 }
 
-export type { iUser }
+export type { iUser };

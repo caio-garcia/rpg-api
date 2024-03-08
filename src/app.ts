@@ -1,18 +1,18 @@
-import { configDotenv } from 'dotenv'
-import express from 'express'
-import routeUser from './controllers/user.controller'
+import { configDotenv } from "dotenv";
+import express from "express";
+import userRoute from "./controllers/user.controller";
 
-configDotenv()
+configDotenv();
 
-const app = express()
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Welcome to RPG API')
-})
+app.get("/", (req, res) => {
+  console.log(req.body);
+  res.send("Welcome to RPG API");
+});
 
-app.use('/user', routeUser)
+app.use("/user", userRoute);
 
 app.listen(Number(process.env.PORT), () => {
-  console.log(`RPG API is listening at http://localhost:${process.env.PORT}`)
-}
-)
+  console.log(`RPG API is listening at http://localhost:${process.env.PORT}`);
+});
